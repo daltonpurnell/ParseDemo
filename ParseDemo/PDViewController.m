@@ -13,7 +13,7 @@
 
 static NSString * const entryNameKey = @"name";
 
-@interface PDViewController ()
+@interface PDViewController () <PFSignUpViewControllerDelegate, PFLogInViewControllerDelegate>
 
 @property (nonatomic, strong) PFUser *currentUser;
 
@@ -62,15 +62,50 @@ static NSString * const entryNameKey = @"name";
 }
 
 - (IBAction)signIn:(id)sender {
+    
+    PFLogInViewController *logIn = [PFLogInViewController new];
+    logIn.delegate = self;
+    [self presentViewController:logIn animated:YES completion:nil];
+        
+    }
 
-}
 
 - (IBAction)signUp:(id)sender {
+    
+    PFSignUpViewController *signUp = [PFSignUpViewController new];
+    signUp.delegate = self;
+    [self presentViewController:signUp animated:YES completion:nil];
+    
 
 }
 
 - (void)addUserData {
-
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"yourData"];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        
+        if ([objects count] == 0) {
+            
+            PFObject *yourData = [PFObject objectWithClassName:@"yourData"];
+            yourData[@"dictionaryKey"] = @"dictionaryValue";
+            
+            // if there is a current uiser you can set that user as the only user that can access this object
+            if (self.currentUser) {
+                yourData.ACL = [PFACL ACLWithUser:self.currentUser];
+            }
+            
+            [yourData saveInBackground];
+            
+        } else {
+            
+            
+            NSLog(@"You already stored your data");
+            
+        }
+        
+    }];
+     
 }
 
 @end

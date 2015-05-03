@@ -18,8 +18,8 @@
 {
 
     [Entry registerSubclass];
-    // [Optional] Power your app with Local Datastore. For more info, go to
-    // https://parse.com/docs/ios_guide#localdatastore/iOS
+    
+    // [Optional] Power your app with Local Datastore
     [Parse enableLocalDatastore];
     
     // Initialize Parse.
@@ -29,7 +29,6 @@
     // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-    // ...
     
     return YES;
 }
