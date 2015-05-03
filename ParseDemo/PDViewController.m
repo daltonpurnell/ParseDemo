@@ -27,13 +27,37 @@ static NSString * const entryNameKey = @"name";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
+    testObject[@"foo"] = @"bar";
+    [testObject saveInBackground];
+    
+    
 }
 
 - (IBAction)storeObject:(id)sender {
+    
+    Entry *entry = [Entry object];
+    entry.name = self.objectNameField.text;
+    
+    [entry saveEventually];
+    // (this is for when you’re using LocalDataStore.  Parse will save it locally and then save it to the database when it’s convenient)
+    
+//    // the most common one to use, though is this one:
+//    [entry saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        // code to execute after the save is done (update the UI with a message or something saying: "save successful," or "save succeeded”)
+//        
+//    } ];
+    
 
 }
 
 - (IBAction)retrieveObject:(id)sender {
+    
+    PFQuery *query = [Entry query];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *entries, NSError *error) {
+        
+    }];
 
 }
 

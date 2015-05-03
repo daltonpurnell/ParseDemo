@@ -8,7 +8,9 @@
 
 #import "PDAppDelegate.h"
 #import "Entry.h"
-#import <Parse/Parse.h>
+
+@import Parse;
+
 
 @implementation PDAppDelegate
 
@@ -16,12 +18,19 @@
 {
 
     [Entry registerSubclass];
+    // [Optional] Power your app with Local Datastore. For more info, go to
+    // https://parse.com/docs/ios_guide#localdatastore/iOS
     [Parse enableLocalDatastore];
-
-    [Parse setApplicationId:@"---"
-                  clientKey:@"---"];
+    
+    // Initialize Parse.
+    [Parse setApplicationId:@"E99a5fulBT0my04WMfJxAVkriLPxUSnTzpPD10dV"
+                  clientKey:@"279RFZ4gaEq2srQqHkaN6bAJoa0iSxxtPAzU752S"];
+    
+    // [Optional] Track statistics around application opens.
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-
+    
+    // ...
+    
     return YES;
 }
 							
